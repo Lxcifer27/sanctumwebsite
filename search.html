@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- External CSS FILES ~ Bootstrap, Slick, AOS{animate on scroll} -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+	<!-- Custom css -->
+	<style>
+		body {
+	padding-top: 30px;
+	background: url(bg-img.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	text-transform: capitalize;
+}
+
+.search-container {
+	position: relative;
+	top: 230px;
+	transition: all 0.5s linear;
+	z-index: 2;
+}
+
+.search-container-static {
+	position: static;
+	top: 0;
+	transition: all 0.5s linear;
+}
+
+#items {
+	transition: all 0.5s linear;
+	display: none;
+}
+
+.item-inner {
+	background-color: white;
+	margin: 0.5rem;
+	box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	padding: 15px;
+}
+
+.item img {
+	margin-bottom: 10px;
+}
+
+.reset-search {
+	display: none;
+	margin-left: -35px;
+	background: transparent;
+	border: none;
+	font-size: 20px;
+	z-index: 3;
+}
+
+.searchbar {
+	position: relative;
+	width: 50%;
+	background: transparent;
+	padding: 12px;
+	border-color: #E6D5B8;
+	border-right: none;
+	border-top-left-radius: 25px;
+	border-bottom-left-radius: 25px;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	transition: 0.9s ease-in-out;
+}
+
+.searchbar {
+	position: relative;
+	width: 50%;
+	background: transparent;
+	padding: 12px;
+	border-color: #000000;
+	border-right: none;
+	border-top-left-radius: 25px;
+	border-bottom-left-radius: 25px;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	transition: 0.9s ease-in-out;
+}
+
+.searchbar::placeholder {
+	color: black;
+}
+
+.searchbar-btn {
+	border-left: none;
+	padding-left: 5px!important;
+	color: black;
+	z-index: 2;
+	background-color: transparent;
+	border-color: #000000;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	border-top-right-radius: 25px;
+	border-bottom-right-radius: 25px;
+}
+
+.searchbar:focus {
+	color: black;
+	border-color: black;
+	background-color: transparent;
+	width: 100%;
+}
+
+.searchbar-btn:hover,
+.searchbar-btn:focus-visible,
+.searchbar-btn:active,
+.reset-search:hover,
+.reset-search:focus-visible,
+.reset-search:active {
+	color: rgba(0, 0, 0, 0.664);
+}
+	</style>
+
+	<title>Search</title>
+	<link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
+</head>
+
+<body>
+	<div class="container m-auto text-center">
+		<button class="btn float-start bg-dark text-light back-btn mt-2 shadow-none"
+			onclick="javascript:history.back()">
+			Go Back
+		</button>
+		<div class="row justify-content-center m-auto" id="search">
+			<form id="search-form" action="" method="POST" enctype="multipart/form-data">
+				<div class="form-group d-flex justify-content-center search-container">
+					<input class="form-control shadow-none searchbar" type="text" placeholder="Search" />
+					<button type="reset" class="reset-search shadow-none"><i class="bi bi-x"></i></button>
+					<button type="submit" class="btn searchbar-btn shadow-none px-3"><i
+							class="bi bi-search"></i></button>
+				</div>
+			</form>
+		</div>
+		<div class="row" id="items">
+
+		</div>
+	</div>
+
+	<!-- External JS FILES ~ Bootstrap, Slick, JQuery, Aos{Animation on scroll} -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+	</script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+	<!-- custom js -->
+	<script>
+		var data = [
+	// CSE 1st Sem
+	{
+		"image": "../images/semester-img/communication-skills.jpg",
+		"subject": "Communication Skills",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/applied-maths-1.jpg",
+		"subject": "Applied Maths-I",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/engineering-drawing.jpg",
+		"subject": "Engineering Drawing",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/iit.jpg",
+		"subject": "Introduction to Information Technology",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/workshop.jpg",
+		"subject": "Workshop Practice",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/applied-maths-2.jpg",
+		"subject": "Applied Maths-II",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/applied-physics.jpg",
+		"subject": "Applied Physics-I",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/basic-electronics.jpg",
+		"subject": "Basic Electronics",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/electrical-engineering.jpg",
+		"subject": "Electrical Engineering",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/programming-in-c.jpg",
+		"subject": "Programming in C",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/operating-systems.jpg",
+		"subject": "Operating System",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/digital-electronics.jpg",
+		"subject": "Digital Electronics",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/data-structure.jpg",
+		"subject": "Data Structure in C",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/microprocessor.jpg",
+		"subject": "Micro Processor",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/computer-workshop-1.jpg",
+		"subject": "Computer Workshop-I",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/oops.jpg",
+		"subject": "Object Oriented Programming",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/computer-organisation.jpg",
+		"subject": "Computer Organisation",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/data-communication.jpg",
+		"subject": "Data Communication",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/dbms.jpg",
+		"subject": "Data Base Management System",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/pi.jpg",
+		"subject": "Peripherals and Interface",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/computer-workshop-2.jpg",
+		"subject": "Computer Workshop-II",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/ctm.jpg",
+		"subject": "Computer Troubleshooting and Maintainence",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/cn.jpg",
+		"subject": "Computer Network",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/pij.jpg",
+		"subject": "Programming in Java",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/edm.jpg",
+		"subject": "Entrepreneurship Development and Management",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/computer-workshop-3.jpg",
+		"subject": "Computer Workshop-III",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/cg.jpg",
+		"subject": "Computer Graphics",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	},
+	{
+		"image": "../images/semester-img/se.jpg",
+		"subject": "Software Engineer",
+		"semester": "Ist Semester (1st)",
+		"course": "Computer Science Engineering (CSE)"
+	}
+];
+
+var items = "",
+	subjects = "",
+	semesters = "",
+	courses = "";
+
+for (var i = 0; i < data.length; i++) {
+	var subject = data[i].subject,
+		semester = data[i].semester,
+		course = data[i].course,
+		image = data[i].image;
+
+	//create item cards
+	items += "<a href='../cse/cse-first-semester.php#semester1-sub' class='col-sm-6 p-1 m-auto text-reset text-decoration-none'><div class='item' data-subject='" + subject + "' data-semester='" + semester + "' data-course='" + course + "'><div class='item-inner text-center'><img src='" + image + "'><br />subject: " + subject + "<br />semester: " + semester + "<br />course: " + course + "</div></div></a>";
+}
+
+$("#items").html(items);
+
+//on search form submit
+$("#search-form").submit(function (e) {
+	e.preventDefault();
+	var query = $("#search-form input").val().toLowerCase();
+
+	$(".item").hide();
+	$(".item").each(function () {
+		var subject = $(this).data("subject").toLowerCase(),
+			semester = $(this).data("semester").toLowerCase(),
+			course = $(this).data("course").toLowerCase();
+
+		if (subject.indexOf(query) > -1 || semester.indexOf(query) > -1 || course.indexOf(query) > -1) {
+			$(this).show();
+		}
+	});
+});
+
+// on form submit show result else hide
+$('.btn').click(function () {
+	$('#items').show('slow');
+	$('.reset-search').show('slow');
+});
+//container positioning
+$(function () {
+	//adding a new class on button element
+	$('.btn').on('click', function () {
+		$('.search-container').addClass('search-container-static');
+		$('#items').addClass('d-flex');
+	});
+});
+$('.reset-search').click(function () {
+	$('#items').hide('slow');
+	$('.reset-search').hide();
+});
+$('.reset-search').on('click', function () {
+	$('.search-container').removeClass('search-container-static');
+	$('#items').removeClass('d-flex');
+});
+	</script>
+</body>
+
+</html>
